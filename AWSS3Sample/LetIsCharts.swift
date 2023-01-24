@@ -12,6 +12,7 @@ struct reWeights: Identifiable, Codable, Hashable {
     //var userId: String
     var id = UUID().uuidString
     var userId: String
+    var type: String
     var date: Date
     var weight: Double
     var animate: Bool = false
@@ -22,26 +23,50 @@ let calendar = Calendar(identifier: .japanese)
 struct LetIsCharts: View {
     
     var sampledata: [reWeights] = [
-        reWeights(userId: "aaa", date: calendar.date(from: DateComponents(year: 2023, month: 1, day: 24))!, weight: 57.5),
-        reWeights(userId: "aaa", date: calendar.date(from: DateComponents(year: 2023, month: 1, day: 25))!, weight: 57.0),
-        reWeights(userId: "aaa", date: calendar.date(from: DateComponents(year: 2023, month: 1, day: 26))!, weight: 56.8),
-        reWeights(userId: "aaa", date: calendar.date(from: DateComponents(year: 2023, month: 1, day: 27))!, weight: 56.1),
-        reWeights(userId: "aaa", date: calendar.date(from: DateComponents(year: 2023, month: 1, day: 28))!, weight: 55.5),
-        reWeights(userId: "aaa", date: calendar.date(from: DateComponents(year: 2023, month: 1, day: 29))!, weight: 55.3),
-        reWeights(userId: "aaa", date: calendar.date(from: DateComponents(year: 2023, month: 1, day: 30))!, weight: 54.9),
-        reWeights(userId: "aaa", date: calendar.date(from: DateComponents(year: 2023, month: 1, day: 31))!, weight: 54.7),
+        reWeights(userId: "aaa", type: "現在", date: calendar.date(from: DateComponents(year: 2023, month: 1, day: 24))!, weight: 57.5),
+        
+        reWeights(userId: "aaa", type: "目標", date: calendar.date(from: DateComponents(year: 2023, month: 1, day: 24))!, weight: 57.5),
+        reWeights(userId: "aaa", type: "現在", date: calendar.date(from: DateComponents(year: 2023, month: 1, day: 25))!, weight: 57.0),
+        reWeights(userId: "aaa", type: "現在", date: calendar.date(from: DateComponents(year: 2023, month: 1, day: 26))!, weight: 56.8),
+        reWeights(userId: "aaa", type: "現在", date: calendar.date(from: DateComponents(year: 2023, month: 1, day: 27))!, weight: 56.1),
+        reWeights(userId: "aaa", type: "現在", date: calendar.date(from: DateComponents(year: 2023, month: 1, day: 28))!, weight: 55.5),
+        reWeights(userId: "aaa", type: "現在", date: calendar.date(from: DateComponents(year: 2023, month: 1, day: 29))!, weight: 55.3),
+        reWeights(userId: "aaa", type: "現在", date: calendar.date(from: DateComponents(year: 2023, month: 1, day: 30))!, weight: 54.9),
+        reWeights(userId: "aaa", type: "目標", date: calendar.date(from: DateComponents(year: 2023, month: 1, day: 30))!, weight: 55.0),
+        reWeights(userId: "aaa", type: "現在", date: calendar.date(from: DateComponents(year: 2023, month: 1, day: 31))!, weight: 54.7),
+       // reWeights(userId: "aaa", type: "現在", date: calendar.date(from: DateComponents(year: 2023, month: 2, day: 1))!, weight: 54.5),
+
     ]
-    
+        
     @State var currentActiveItem: reWeights?
     @State var plotWidth: CGFloat = 0
     
+    let dateRange: ClosedRange<Date> = {
+        let calendar = Calendar.current
+        let start = calendar.date(byAdding: .day, value: -7, to: Date())!
+        let end = calendar.date(byAdding: .day, value: 0, to: Date())!
+        return start...end
+    }()
+    
     var body: some View {
-        Chart {
-            ForEach(sampledata) { data in
-                LineMark(x: .value("Date", data.date), y: .value("Weight", data.weight))
+            Chart(sampledata) { item in
+                if item.type == "現在" {
+                    LineMark(x: .value("Date", item.date), y: .value("Weight", item.weight))
+                        .foregroundStyle(by: .value("color", item.type))
+                }
+                if item.type == "目標" {
+                    LineMark(x: .value("Date", item.date), y: .value("Weight", item.weight))
+                        .lineStyle(.init(lineWidth: 1, miterLimit: 1, dash: [5], dashPhase: 5))
+                        .foregroundStyle(by: .value("color", item.type))
+                        
+                    
+                    PointMark(x: .value("Date", item.date), y: .value("Weight", item.weight))
+                        .foregroundStyle(by: .value("color", item.type))
+                }
                 
-                if let currentActiveItem, currentActiveItem.id == data.id {
+                if let currentActiveItem, currentActiveItem.id == item.id {
                     RuleMark(x: .value("日付", currentActiveItem.date))
+                        .foregroundStyle(.orange.opacity(0.6))
                         .lineStyle(.init(lineWidth: 2, miterLimit: 2, dash: [2], dashPhase: 5))
                         .annotation(position: .top) {
                             VStack(alignment: .leading, spacing: 6) {
@@ -60,51 +85,45 @@ struct LetIsCharts: View {
                             }
                         }
                 }
-                
             }
-            
-            RuleMark(xStart: .value("FirstDay", sampledata[2].date),
-                     xEnd: .value("FinalDay", sampledata[5].date),
-                     y: .value("", 55.5))
-            .foregroundStyle(Color.red)
-            
-        }
-        .padding()
-        .padding(.top, 200)
-        .chartXAxis {
-            AxisMarks(values: .stride(by: .day, count: 1)) { _ in
-                AxisGridLine()
-                AxisTick()
-                AxisValueLabel(format: .dateTime.day())
+            .frame(height: 250)
+            .padding()
+            .chartForegroundStyleScale([
+                "現在": .orange, "目標": .gray.opacity(0.6)
+            ])
+            .chartXAxis {
+                AxisMarks(values: .stride(by: .day, count: 1)) { _ in
+                    AxisGridLine()
+                    AxisTick()
+                    AxisValueLabel(format: .dateTime.day())
+                }
             }
-        }
-        .chartYScale(domain: .automatic(includesZero: false))
-        .chartOverlay(content: { proxy in
-            GeometryReader { innerProxy in
-                Rectangle()
-                    .fill(.clear)
-                    .contentShape(Rectangle())
-                    .gesture(
-                        DragGesture()
-                            .onChanged{ value in
-                                let location = value.location
-                                if let date: Date = proxy.value(atX: location.x) {
-                                    let calendar = Calendar.current
-                                    let day = calendar.component(.day, from: date)
-                                    if let currentItem = sampledata.first(where: { item in
-                                        calendar.component(.day, from: item.date) == day
-                                    }) {
-                                        self.currentActiveItem = currentItem
-                                        self.plotWidth = proxy.plotAreaSize.width
+            .chartYScale(domain: .automatic(includesZero: false))
+            .chartOverlay(content: { proxy in
+                GeometryReader { innerProxy in
+                    Rectangle()
+                        .fill(.clear)
+                        .contentShape(Rectangle())
+                        .gesture(
+                            DragGesture()
+                                .onChanged{ value in
+                                    let location = value.location
+                                    if let date: Date = proxy.value(atX: location.x) {
+                                        let calendar = Calendar.current
+                                        let day = calendar.component(.day, from: date)
+                                        if let currentItem = sampledata.first(where: { item in
+                                            calendar.component(.day, from: item.date) == day
+                                        }) {
+                                            self.currentActiveItem = currentItem
+                                            self.plotWidth = proxy.plotAreaSize.width
+                                        }
                                     }
+                                }.onEnded{ value in
+                                    currentActiveItem = nil
                                 }
-                            }.onEnded{ value in
-                                currentActiveItem = nil
-                            }
-                    )
-            }
-        })
-        
+                        )
+                }
+            })
     }
 }
 
