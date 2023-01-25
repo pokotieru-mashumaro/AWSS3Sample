@@ -45,13 +45,6 @@ struct LetIsCharts: View {
     @State var currentActiveItem: reWeights?
     @State var plotWidth: CGFloat = 0
     
-    let weekRange: ClosedRange<Date> = {
-        let calendar = Calendar.current
-        let start = calendar.date(from: DateComponents(year: 2023, month: 1, day: 24))!
-        let end = calendar.date(from: DateComponents(year: 2023, month: 1, day: 30))!
-        return start...end
-    }()
-    
     var body: some View {
         VStack {
             Button {
@@ -61,35 +54,35 @@ struct LetIsCharts: View {
             }
 
             
-            Chart(sampledata) { item in
-                    if item.type == "現在" {
-                        LineMark(x: .value("Date", item.date), y: .value("Weight", item.weight))
-                            .foregroundStyle(by: .value("color", item.type))
+            Chart {
+                ForEach(sampledata) {
+                    if $0.type == "現在" {
+                        LineMark(x: .value("Date", $0.date), y: .value("Weight", $0.weight))
+                            .foregroundStyle(by: .value("color", $0.type))
                     }
-                
-                    if item.type == "目標", idealGraphSelection{
-                        LineMark(x: .value("Date", item.date), y: .value("Weight", item.weight))
-                            .lineStyle(.init(lineWidth: 1, miterLimit: 1, dash: [5], dashPhase: 5))
-                            .foregroundStyle(by: .value("color", item.type))
-                            
-                        
-                        PointMark(x: .value("Date", item.date), y: .value("Weight", item.weight))
-                            .foregroundStyle(by: .value("color", item.type))
-                    }
-                
-                if !idealGraphSelection {
-                    RuleMark(y: .value("体重", Double(hopeWeight) ?? 55.0))
-                        .foregroundStyle(.gray.opacity(0.08))
-                        .lineStyle(.init(lineWidth: 2, miterLimit: 2, dash: [5], dashPhase: 5))
-                        .annotation(alignment: .leading) {
-                            Text("目標")
-                                .foregroundColor(.gray.opacity(0.1))
-                                .font(.caption)
-                        }
-                }
- 
                     
-                    if let currentActiveItem, currentActiveItem.id == item.id {
+                    if $0.type == "目標", idealGraphSelection{
+                        LineMark(x: .value("Date", $0.date), y: .value("Weight", $0.weight))
+                            .lineStyle(.init(lineWidth: 1, miterLimit: 1, dash: [5], dashPhase: 5))
+                            .foregroundStyle(by: .value("color", $0.type))
+                        
+                        
+                        PointMark(x: .value("Date", $0.date), y: .value("Weight", $0.weight))
+                            .foregroundStyle(by: .value("color", $0.type))
+                    }
+                    
+                    if !idealGraphSelection {
+                        RuleMark(y: .value("体重", Double(hopeWeight) ?? 55.0))
+                            .foregroundStyle(.gray.opacity(0.08))
+                            .lineStyle(.init(lineWidth: 2, miterLimit: 2, dash: [5], dashPhase: 5))
+                            .annotation(alignment: .leading) {
+                                Text("目標")
+                                    .foregroundColor(.gray.opacity(0.1))
+                                    .font(.caption)
+                            }
+                    }
+     
+                    if let currentActiveItem, currentActiveItem.id == $0.id {
                         RuleMark(x: .value("日付", currentActiveItem.date))
                             .foregroundStyle(.orange.opacity(0.6))
                             .lineStyle(.init(lineWidth: 2, miterLimit: 2, dash: [2], dashPhase: 5))
@@ -110,6 +103,8 @@ struct LetIsCharts: View {
                                 }
                             }
                     }
+                }
+                
                 }
                 .frame(height: 250)
                 .padding()

@@ -7,7 +7,7 @@
 
 import SwiftUI
 import Charts
-//
+
 //struct reWeights: Identifiable, Codable, Hashable {
 //    //var userId: String
 //    var id = UUID().uuidString
@@ -17,14 +17,49 @@ import Charts
 //    var weight: Double
 //    var animate: Bool = false
 //}
-//
+
 //let calendar = Calendar(identifier: .japanese)
 
 
 struct SampleChart: View {
+    var sampledata: [reWeights] = [
+        reWeights(userId: "aaa", type: "現在", date: calendar.date(from: DateComponents(year: 2023, month: 1, day: 24))!, weight: 57.5),
+        reWeights(userId: "aaa", type: "現在", date: calendar.date(from: DateComponents(year: 2023, month: 1, day: 25))!, weight: 57.0),
+        reWeights(userId: "aaa", type: "現在", date: calendar.date(from: DateComponents(year: 2023, month: 1, day: 26))!, weight: 56.8),
+        reWeights(userId: "aaa", type: "現在", date: calendar.date(from: DateComponents(year: 2023, month: 1, day: 27))!, weight: 56.1),
+        reWeights(userId: "aaa", type: "現在", date: calendar.date(from: DateComponents(year: 2023, month: 1, day: 28))!, weight: 55.5),
+        reWeights(userId: "aaa", type: "現在", date: calendar.date(from: DateComponents(year: 2023, month: 1, day: 29))!, weight: 55.3),
+        reWeights(userId: "aaa", type: "現在", date: calendar.date(from: DateComponents(year: 2023, month: 1, day: 30))!, weight: 54.9),
+    ]
+    
+    var idealData: [reWeights] = [
+        reWeights(userId: "aaa", type: "理想", date: calendar.date(from: DateComponents(year: 2023, month: 1, day: 24))!, weight: 57.5),
+        reWeights(userId: "aaa", type: "理想", date: calendar.date(from: DateComponents(year: 2023, month: 1, day: 30))!, weight: 55.0),
+    ]
+    
     var body: some View {
-        Chart {
-            
+        VStack {
+            Chart {
+                ForEach(sampledata) {
+                    LineMark(x: .value("Date", $0.date),
+                             y: .value("Weight", $0.weight))
+                    .foregroundStyle(.orange)
+                    .foregroundStyle(by: .value("color", "現在"))
+                    .lineStyle(StrokeStyle(lineWidth: 3))
+                }
+                
+                ForEach(idealData) {
+                    LineMark(x: .value("Date", $0.date),
+                             y: .value("Weight", $0.weight))
+                    .foregroundStyle(.gray)
+                    .foregroundStyle(by: .value("color", "目標"))
+                    .lineStyle(StrokeStyle(lineWidth: 3, dash: [5, 10]))
+                }
+                
+            }
+            .padding()
+            .chartLegend(.hidden)
+            .chartYScale(domain: .automatic(includesZero: false))
         }
     }
 }
