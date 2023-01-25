@@ -8,6 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		B948767E297FA3C100AEFAC9 /* LetIsCharts.swift in Sources */ = {isa = PBXBuildFile; fileRef = B948767D297FA3C100AEFAC9 /* LetIsCharts.swift */; };
+		B96BCC352980D380004DE773 /* CoreDataSample.swift in Sources */ = {isa = PBXBuildFile; fileRef = B96BCC342980D380004DE773 /* CoreDataSample.swift */; };
+		B96BCC382980E231004DE773 /* WeightModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B96BCC362980E231004DE773 /* WeightModel.xcdatamodeld */; };
+		B96BCC3A2980EED6004DE773 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = B96BCC392980EED6004DE773 /* Persistence.swift */; };
+		B96BCC3D298102E8004DE773 /* WeightModel+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = B96BCC3B298102E8004DE773 /* WeightModel+CoreDataClass.swift */; };
+		B96BCC3E298102E8004DE773 /* WeightModel+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = B96BCC3C298102E8004DE773 /* WeightModel+CoreDataProperties.swift */; };
+		B96BCC4229810563004DE773 /* WeightDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B96BCC4129810563004DE773 /* WeightDataModel.swift */; };
+		B96BCC44298136E6004DE773 /* SampleChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = B96BCC43298136E6004DE773 /* SampleChart.swift */; };
 		B972C92D297CE93700681A44 /* AWSS3SampleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B972C92C297CE93700681A44 /* AWSS3SampleApp.swift */; };
 		B972C92F297CE93700681A44 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B972C92E297CE93700681A44 /* ContentView.swift */; };
 		B972C931297CE93800681A44 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B972C930297CE93800681A44 /* Assets.xcassets */; };
@@ -16,6 +23,13 @@
 
 /* Begin PBXFileReference section */
 		B948767D297FA3C100AEFAC9 /* LetIsCharts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetIsCharts.swift; sourceTree = "<group>"; };
+		B96BCC342980D380004DE773 /* CoreDataSample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataSample.swift; sourceTree = "<group>"; };
+		B96BCC372980E231004DE773 /* WeightModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = WeightModel.xcdatamodel; sourceTree = "<group>"; };
+		B96BCC392980EED6004DE773 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
+		B96BCC3B298102E8004DE773 /* WeightModel+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WeightModel+CoreDataClass.swift"; sourceTree = "<group>"; };
+		B96BCC3C298102E8004DE773 /* WeightModel+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WeightModel+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		B96BCC4129810563004DE773 /* WeightDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeightDataModel.swift; sourceTree = "<group>"; };
+		B96BCC43298136E6004DE773 /* SampleChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleChart.swift; sourceTree = "<group>"; };
 		B972C929297CE93700681A44 /* AWSS3Sample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AWSS3Sample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B972C92C297CE93700681A44 /* AWSS3SampleApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWSS3SampleApp.swift; sourceTree = "<group>"; };
 		B972C92E297CE93700681A44 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -34,9 +48,28 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B96BCC3F2981030B004DE773 /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				B96BCC3C298102E8004DE773 /* WeightModel+CoreDataProperties.swift */,
+				B96BCC3B298102E8004DE773 /* WeightModel+CoreDataClass.swift */,
+				B96BCC392980EED6004DE773 /* Persistence.swift */,
+			);
+			path = CoreData;
+			sourceTree = "<group>";
+		};
+		B96BCC4029810533004DE773 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				B96BCC4129810563004DE773 /* WeightDataModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		B972C920297CE93700681A44 = {
 			isa = PBXGroup;
 			children = (
+				B96BCC3F2981030B004DE773 /* CoreData */,
 				B972C92B297CE93700681A44 /* AWSS3Sample */,
 				B972C92A297CE93700681A44 /* Products */,
 			);
@@ -53,9 +86,13 @@
 		B972C92B297CE93700681A44 /* AWSS3Sample */ = {
 			isa = PBXGroup;
 			children = (
-				B972C92C297CE93700681A44 /* AWSS3SampleApp.swift */,
+				B96BCC4029810533004DE773 /* Model */,
 				B972C92E297CE93700681A44 /* ContentView.swift */,
 				B948767D297FA3C100AEFAC9 /* LetIsCharts.swift */,
+				B96BCC43298136E6004DE773 /* SampleChart.swift */,
+				B96BCC342980D380004DE773 /* CoreDataSample.swift */,
+				B972C92C297CE93700681A44 /* AWSS3SampleApp.swift */,
+				B96BCC362980E231004DE773 /* WeightModel.xcdatamodeld */,
 				B972C930297CE93800681A44 /* Assets.xcassets */,
 				B972C932297CE93800681A44 /* Preview Content */,
 			);
@@ -140,7 +177,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B96BCC3D298102E8004DE773 /* WeightModel+CoreDataClass.swift in Sources */,
+				B96BCC4229810563004DE773 /* WeightDataModel.swift in Sources */,
+				B96BCC382980E231004DE773 /* WeightModel.xcdatamodeld in Sources */,
+				B96BCC352980D380004DE773 /* CoreDataSample.swift in Sources */,
+				B96BCC3E298102E8004DE773 /* WeightModel+CoreDataProperties.swift in Sources */,
 				B972C92F297CE93700681A44 /* ContentView.swift in Sources */,
+				B96BCC44298136E6004DE773 /* SampleChart.swift in Sources */,
+				B96BCC3A2980EED6004DE773 /* Persistence.swift in Sources */,
 				B972C92D297CE93700681A44 /* AWSS3SampleApp.swift in Sources */,
 				B948767E297FA3C100AEFAC9 /* LetIsCharts.swift in Sources */,
 			);
@@ -343,6 +387,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		B96BCC362980E231004DE773 /* WeightModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				B96BCC372980E231004DE773 /* WeightModel.xcdatamodel */,
+			);
+			currentVersion = B96BCC372980E231004DE773 /* WeightModel.xcdatamodel */;
+			path = WeightModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = B972C921297CE93700681A44 /* Project object */;
 }

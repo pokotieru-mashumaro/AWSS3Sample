@@ -47,8 +47,8 @@ struct LetIsCharts: View {
     
     let weekRange: ClosedRange<Date> = {
         let calendar = Calendar.current
-        let start = calendar.date(byAdding: .day, value: -7, to: Date())!
-        let end = calendar.date(byAdding: .day, value: 0, to: Date())!
+        let start = calendar.date(from: DateComponents(year: 2023, month: 1, day: 24))!
+        let end = calendar.date(from: DateComponents(year: 2023, month: 1, day: 30))!
         return start...end
     }()
     
