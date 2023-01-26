@@ -88,7 +88,7 @@ struct LetIsCharts: View {
                             .lineStyle(.init(lineWidth: 2, miterLimit: 2, dash: [2], dashPhase: 5))
                             .annotation(position: .top) {
                                 VStack(alignment: .leading, spacing: 6) {
-                                    Text("体重")
+                                    Text(currentActiveItem.date?.toString("YYY/MM/DD"))
                                         .font(.caption)
                                         .foregroundColor(.gray)
                                     
@@ -152,5 +152,14 @@ struct LetIsCharts: View {
 struct LetIsCharts_Previews: PreviewProvider {
     static var previews: some View {
         LetIsCharts()
+    }
+}
+
+
+extension Date {
+    func toString(_ format: String) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = format
+        return formatter.string(from: self)
     }
 }

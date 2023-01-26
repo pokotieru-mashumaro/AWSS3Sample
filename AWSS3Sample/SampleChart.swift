@@ -33,33 +33,58 @@ struct SampleChart: View {
     ]
     
     var idealData: [reWeights] = [
-        reWeights(userId: "aaa", type: "理想", date: calendar.date(from: DateComponents(year: 2023, month: 1, day: 24))!, weight: 57.5),
-        reWeights(userId: "aaa", type: "理想", date: calendar.date(from: DateComponents(year: 2023, month: 1, day: 30))!, weight: 55.0),
+        reWeights(userId: "aaa", type: "理想", date: calendar.date(from: DateComponents(year: 2023, month: 1, day: 22))!, weight: 57.5),
+        reWeights(userId: "aaa", type: "理想", date: calendar.date(from: DateComponents(year: 2023, month: 1, day: 31))!, weight: 55.0),
     ]
     
+    let dateRange: ClosedRange<Date> = {
+        let calendar = Calendar.current
+        let start = calendar.date(from: DateComponents(year: 2023, month: 1, day: 24))!
+        let end = calendar.date(from: DateComponents(year: 2023, month: 1, day: 30))!
+        return start...end
+    }()
+    
     var body: some View {
-        VStack {
-            Chart {
-                ForEach(sampledata) {
-                    LineMark(x: .value("Date", $0.date),
-                             y: .value("Weight", $0.weight))
-                    .foregroundStyle(.orange)
-                    .foregroundStyle(by: .value("color", "現在"))
-                    .lineStyle(StrokeStyle(lineWidth: 3))
+            ZStack {
+                Chart {
+                    ForEach(sampledata) {
+                        LineMark(x: .value("Date", $0.date),
+                                 y: .value("Weight", $0.weight))
+                        .foregroundStyle(.orange)
+                        .foregroundStyle(by: .value("color", "現在"))
+                        .lineStyle(StrokeStyle(lineWidth: 3))
+                    }
+         
+                    ForEach(idealData) { item in
+                        
+                        LineMark(x: .value("Date", item.date),
+                                 y: .value("Weight", item.weight))
+                        .foregroundStyle(.gray)
+                        .foregroundStyle(by: .value("color", "目標"))
+                        .lineStyle(StrokeStyle(lineWidth: 3, dash: [5, 10]))
+                    }
+                    
                 }
+                .frame(height: 200)
+                .padding()
+                .chartLegend(.hidden)
+                .chartXScale(domain: dateRange)
+                .chartYScale(domain: .automatic(includesZero: false))
                 
-                ForEach(idealData) {
-                    LineMark(x: .value("Date", $0.date),
-                             y: .value("Weight", $0.weight))
-                    .foregroundStyle(.gray)
-                    .foregroundStyle(by: .value("color", "目標"))
-                    .lineStyle(StrokeStyle(lineWidth: 3, dash: [5, 10]))
-                }
-                
-            }
-            .padding()
-            .chartLegend(.hidden)
-            .chartYScale(domain: .automatic(includesZero: false))
+//                Chart {
+//                    ForEach(idealData) {
+//                        LineMark(x: .value("Date", $0.date),
+//                                 y: .value("Weight", $0.weight))
+//                        .foregroundStyle(.gray)
+//                        .foregroundStyle(by: .value("color", "目標"))
+//                        .lineStyle(StrokeStyle(lineWidth: 3, dash: [5, 10]))
+//                    }
+//                }
+//                .frame(height: 200)
+//                .padding()
+//                .chartLegend(.hidden)
+//                .chartYScale(domain: .automatic(includesZero: false))
+            
         }
     }
 }
