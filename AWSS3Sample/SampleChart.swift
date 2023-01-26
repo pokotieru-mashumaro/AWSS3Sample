@@ -65,6 +65,7 @@ struct SampleChart: View {
                     }
                     
                 }
+                
                 .frame(height: 200)
                 .padding()
                 .chartLegend(.hidden)

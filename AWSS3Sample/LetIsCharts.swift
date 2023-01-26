@@ -18,7 +18,7 @@ struct reWeights: Identifiable, Codable, Hashable {
     var animate: Bool = false
 }
 
-let calendar = Calendar(identifier: .japanese)
+let calendar = Calendar.current
 
 struct LetIsCharts: View {
     
@@ -88,7 +88,7 @@ struct LetIsCharts: View {
                             .lineStyle(.init(lineWidth: 2, miterLimit: 2, dash: [2], dashPhase: 5))
                             .annotation(position: .top) {
                                 VStack(alignment: .leading, spacing: 6) {
-                                    Text(currentActiveItem.date?.toString("YYY/MM/DD"))
+                                    Text(currentActiveItem.date.toString("YYYY/M/D"))
                                         .font(.caption)
                                         .foregroundColor(.gray)
                                     

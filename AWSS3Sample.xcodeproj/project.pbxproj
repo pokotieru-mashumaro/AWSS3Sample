@@ -88,8 +88,8 @@
 			children = (
 				B96BCC4029810533004DE773 /* Model */,
 				B972C92E297CE93700681A44 /* ContentView.swift */,
-				B948767D297FA3C100AEFAC9 /* LetIsCharts.swift */,
 				B96BCC43298136E6004DE773 /* SampleChart.swift */,
+				B948767D297FA3C100AEFAC9 /* LetIsCharts.swift */,
 				B96BCC342980D380004DE773 /* CoreDataSample.swift */,
 				B972C92C297CE93700681A44 /* AWSS3SampleApp.swift */,
 				B96BCC362980E231004DE773 /* WeightModel.xcdatamodeld */,
